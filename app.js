@@ -1,4 +1,4 @@
-
+startCountDown(3000);
 var alphabetname = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
 var word = "";
 var letterpos = 0;
@@ -32,6 +32,8 @@ function add(box)
         }
     }   
 }
+var score = 0
+
 function compare()
 {
     for(var i = 0; i < Dictionary.length; i++)
@@ -45,16 +47,20 @@ function compare()
                 document.getElementById(selectedLetterArray[i]).style.backgroundColor = "red";
             }
             document.getElementById("matched").innerHTML += "<div><h1>"+word+"</h1></div>"
+            document.getElementById("score").innerText = score++
+            
             guessedWords[wordCount] = word;
             wordCount++;
             word = "";
             letterpos = 0;
             selectedLetterArray = [];
+            startCountDown(3000);
         }
     }
 }
 function reset()
 {
+    startCountDown(3000);
     for(var i = 0; i < word.length; i++)
     {
         document.getElementById("letter"+i).innerText = "";
@@ -67,7 +73,20 @@ function reset()
     selectedLetterArray = [];
 }
 
-
+function checkRepeat()
+{
+    if(wordCount > 0)
+    {
+        for(var i = 0; i < guessedWords.length; i++)
+        {
+            if(guessedWords[i]==word)
+            {
+                return true;
+            }
+        }
+    }
+    return false;
+}
 var countdownTimer;
 var endTime;
 
@@ -97,23 +116,4 @@ function decrement()
           ( (csecs < 10) ? "0" + csecs : csecs);
     }
     document.getElementById("output").innerHTML=timeStr;
-}
-
-// startCountDown();
-//decrement();
-
-
-function checkRepeat()
-{
-    if(wordCount > 0)
-    {
-        for(var i = 0; i < guessedWords.length; i++)
-        {
-            if(guessedWords[i]==word)
-            {
-                return true;
-            }
-        }
-    }
-    return false;
 }
